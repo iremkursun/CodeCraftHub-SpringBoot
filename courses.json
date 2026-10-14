@@ -1,0 +1,22 @@
+[ {
+  "id" : 2,
+  "name" : "Spring Boot",
+  "description" : "Build REST APIs with Spring Boot",
+  "status" : "In Progress",
+  "target_date" : "2026-12-25",
+  "created_at" : "2026-10-14 08:39:10"
+}, {
+  "id" : 3,
+  "name" : "Python Basics",
+  "description" : "Learn Python fundamentals",
+  "status" : "Not Started",
+  "target_date" : "2026-12-31",
+  "created_at" : "2026-10-14 10:35:42"
+}, {
+  "id" : 4,
+  "name" : "Python Basics",
+  "description" : "Learn Python fundamentals",
+  "status" : "Not Started",
+  "target_date" : "2026-12-31",
+  "created_at" : "2026-10-14 10:35:55"
+} ]

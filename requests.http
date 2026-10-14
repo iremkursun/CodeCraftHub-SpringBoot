@@ -1,0 +1,183 @@
+### ==========================================
+### CODECRAFT HUB API TESTS
+### ==========================================
+
+
+### 1. Hello
+GET http://localhost:8080/
+
+
+### 2. API Status
+GET http://localhost:8080/api/status
+
+
+### ==========================================
+### GET COURSES
+### ==========================================
+
+### 3. Get all courses
+GET http://localhost:8080/api/courses
+
+
+### 4. Get course by ID
+GET http://localhost:8080/api/courses/1
+
+
+### 5. Get non-existing course
+GET http://localhost:8080/api/courses/999
+
+
+### ==========================================
+### CREATE COURSE
+### ==========================================
+
+### 6. Create course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Java Fundamentals",
+  "description": "Learn the basics of Java programming",
+  "target_date": "2026-12-21",
+  "status": "Not Started"
+}
+
+
+### 7. Create second course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Spring Boot",
+  "description": "Build REST APIs with Spring Boot",
+  "target_date": "2026-12-25",
+  "status": "In Progress"
+}
+
+
+### 8. Create completed course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Python for AI",
+  "description": "Learn Python for Artificial Intelligence",
+  "target_date": "2026-11-30",
+  "status": "Completed"
+}
+
+
+### ==========================================
+### UPDATE COURSE
+### ==========================================
+
+### 9. Update course
+PUT http://localhost:8080/api/courses/1
+Content-Type: application/json
+
+{
+  "name": "Advanced Java",
+  "description": "Learn advanced Java programming",
+  "target_date": "2027-01-15",
+  "status": "In Progress"
+}
+
+
+### ==========================================
+### DELETE COURSE
+### ==========================================
+
+### 10. Delete course
+DELETE http://localhost:8080/api/courses/3
+
+
+### ==========================================
+### SEARCH
+### ==========================================
+
+### 11. Search courses
+GET http://localhost:8080/api/courses/search?q=Java
+
+
+### 12. Search courses by Spring
+GET http://localhost:8080/api/courses/search?q=Spring
+
+
+### ==========================================
+### STATISTICS
+### ==========================================
+
+### 13. Course statistics
+GET http://localhost:8080/api/courses/stats
+
+
+### ==========================================
+### VALIDATION TESTS
+### ==========================================
+
+### 14. Missing name
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "description": "This course has no name",
+  "target_date": "2026-12-21",
+  "status": "Not Started"
+}
+
+
+### 15. Missing description
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Test Course",
+  "target_date": "2026-12-21",
+  "status": "Not Started"
+}
+
+
+### 16. Missing target date
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Test Course",
+  "description": "Testing validation",
+  "status": "Not Started"
+}
+
+
+### 17. Missing status
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Test Course",
+  "description": "Testing validation",
+  "target_date": "2026-12-21"
+}
+
+
+### 18. Invalid status
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Test Course",
+  "description": "Testing invalid status",
+  "target_date": "2026-12-21",
+  "status": "Running"
+}
+
+
+### 19. Invalid date format
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Test Course",
+  "description": "Testing invalid date",
+  "target_date": "21-12-2026",
+  "status": "Not Started"
+}
