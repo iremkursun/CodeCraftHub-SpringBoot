@@ -1,311 +1,358 @@
-# CodeCraftHub Learning Management System
+# CodeCraftHub – Course Management REST API
 
-A simple REST API for tracking learning goals and courses, built with Java and Spring Boot.
+A RESTful Course Management API built with Java 21, Spring Boot, and Maven as part of the CodeCraftHub learning project.
 
-## Features
+The application provides CRUD operations for managing courses, input validation, status management, error handling, and JSON-based data persistence without requiring an external database.
 
-- Complete CRUD operations for course management
-- JSON file-based data storage
-- No database required
-- RESTful API design
-- Automatic ID generation
-- Automatic `created_at` timestamp generation
+---
+
+## 🚀 Features
+
+- Create a new course
+- Retrieve all courses
+- Retrieve a course by ID
+- Update an existing course
+- Delete a course
+- Automatic course ID generation
+- Automatic created_at timestamp generation
 - Input validation
-- Status validation
-- Error handling for missing courses and invalid requests
-- Automatic creation of `courses.json` if the file does not exist
+- Course status validation
+- Error handling
+- Custom exception handling
+- JSON-based data persistence
+- Automatic creation of the data file when required
+- RESTful API architecture
+- Maven-based build system
 
-## Technologies
+---
+
+## 🛠️ Technologies
 
 - Java 21
 - Spring Boot
+- Spring Web
 - Maven
 - Jackson
 - Apache Tomcat
 - JSON
+- REST API
 
-## Installation
+---
 
-### Prerequisites
+## 📋 Prerequisites
 
 Make sure the following are installed:
 
 - Java JDK 21 or higher
-- Maven, or use the included Maven Wrapper
+- Maven
+
+The project also includes the Maven Wrapper, so Maven does not need to be installed globally.
 
 Check Java:
 
-```bash
-java -version
-```
+    java -version
 
 Check Maven:
 
-```bash
-mvn -version
-```
+    mvn -version
 
-If Maven is not installed globally, use the Maven Wrapper included with the project.
+If Maven is not installed globally, you can use the Maven Wrapper included with the project.
 
-## Running the Application
+---
 
-### Using Maven Wrapper
+## 📂 Project Structure
+
+    codecraft-hub/
+    ├── .mvn/
+    │   └── wrapper/
+    │       ├── maven-wrapper.jar
+    │       └── maven-wrapper.properties
+    │
+    ├── src/
+    │   ├── main/
+    │   │   ├── java/
+    │   │   │   └── com/
+    │   │   │       └── codecrafthub/
+    │   │   │           ├── model/
+    │   │   │           │   └── Course.java
+    │   │   │           │
+    │   │   │           ├── service/
+    │   │   │           │   ├── CourseService.java
+    │   │   │           │   └── StatusService.java
+    │   │   │           │
+    │   │   │           ├── ApiStatus.java
+    │   │   │           ├── CodecraftHubApplication.java
+    │   │   │           ├── CourseController.java
+    │   │   │           ├── CourseNotFoundException.java
+    │   │   │           ├── GlobalExceptionHandler.java
+    │   │   │           ├── HelloController.java
+    │   │   │           └── StatusController.java
+    │   │   │
+    │   │   └── resources/
+    │   │       └── application.properties
+    │   │
+    │   └── test/
+    │       └── java/
+    │           └── com/
+    │               └── codecrafthub/
+    │                   └── CodecraftHubApplicationTests.java
+    │
+    ├── courses.json
+    ├── pom.xml
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── .gitignore
+    └── README.md
+
+---
+
+# ▶️ Running the Application
+
+## Using Maven Wrapper
 
 On Windows PowerShell:
 
-```powershell
-.\mvnw.cmd spring-boot:run
-```
+    .\mvnw.cmd spring-boot:run
 
-### Using Maven
+## Using Maven
 
-```bash
-mvn spring-boot:run
-```
+    mvn spring-boot:run
 
 The application starts on:
 
-```text
-http://localhost:8080
-```
+    http://localhost:8080
 
-## Building the Application
+---
 
-To create a production build:
+# 🔨 Building the Project
 
-```powershell
-.\mvnw.cmd clean package
-```
+To build the project:
 
-If the build is successful, Maven creates the application JAR file in the `target` directory.
+    .\mvnw.cmd clean package
 
-The project has been successfully built using Java 21 and the Maven Wrapper.
+A successful build ends with:
 
-## Data Storage
+    BUILD SUCCESS
 
-Course data is stored in:
+The generated JAR file is created inside:
 
-```text
-courses.json
-```
+    target/
 
-The application automatically creates this file if it does not already exist.
+---
 
-No external database is required.
-
-## API Endpoints
+# 📡 API Endpoints
 
 Base URL:
 
-```text
-http://localhost:8080/api
-```
+    http://localhost:8080/api
 
-### 1. Add a Course
+---
 
-**POST**
+## 1. Create a Course
 
-```text
-/api/courses
-```
+### POST
 
-Request body:
+    /api/courses
 
-```json
-{
-  "name": "Python Basics",
-  "description": "Learn Python fundamentals",
-  "target_date": "2025-12-31",
-  "status": "Not Started"
-}
-```
+### Request Body
 
-Example using curl:
+    {
+      "name": "Python Basics",
+      "description": "Learn Python fundamentals",
+      "target_date": "2026-12-31",
+      "status": "Not Started"
+    }
 
-```bash
-curl -X POST http://localhost:8080/api/courses \
-  -H "Content-Type: application/json" \
-  -d "{\"name\":\"Python Basics\",\"description\":\"Learn Python fundamentals\",\"target_date\":\"2025-12-31\",\"status\":\"Not Started\"}"
-```
+The id and created_at fields are generated automatically.
 
-The `id` and `created_at` fields are generated automatically.
+### Example using curl
 
-### 2. Get All Courses
+    curl -X POST http://localhost:8080/api/courses \
+      -H "Content-Type: application/json" \
+      -d "{\"name\":\"Python Basics\",\"description\":\"Learn Python fundamentals\",\"target_date\":\"2026-12-31\",\"status\":\"Not Started\"}"
 
-**GET**
+---
 
-```text
-/api/courses
-```
+## 2. Get All Courses
+
+### GET
+
+    /api/courses
 
 Example:
 
-```bash
-curl http://localhost:8080/api/courses
-```
+    curl http://localhost:8080/api/courses
 
-The response contains all courses stored in `courses.json`.
+Returns all available courses.
 
-### 3. Get a Specific Course
+---
 
-**GET**
+## 3. Get a Course by ID
 
-```text
-/api/courses/{id}
-```
+### GET
+
+    /api/courses/{id}
 
 Example:
 
-```bash
-curl http://localhost:8080/api/courses/1
-```
+    curl http://localhost:8080/api/courses/1
 
-If the course does not exist, the API returns:
+If the requested course does not exist, the API returns:
 
-```text
-404 NOT_FOUND
-```
+    404 NOT_FOUND
 
-### 4. Update a Course
+---
 
-**PUT**
+## 4. Update a Course
 
-```text
-/api/courses/{id}
-```
+### PUT
 
-All fields are optional when updating a course.
+    /api/courses/{id}
 
 Example request:
 
-```json
-{
-  "status": "In Progress"
-}
-```
+    {
+      "status": "In Progress"
+    }
 
 Example using curl:
 
-```bash
-curl -X PUT http://localhost:8080/api/courses/1 \
-  -H "Content-Type: application/json" \
-  -d "{\"status\":\"In Progress\"}"
-```
+    curl -X PUT http://localhost:8080/api/courses/1 \
+      -H "Content-Type: application/json" \
+      -d "{\"status\":\"In Progress\"}"
 
-Supported status values are:
+The course can be updated according to the validation rules implemented by the API.
 
-```text
-Not Started
-In Progress
-Completed
-```
+---
 
-### 5. Delete a Course
+## 5. Delete a Course
 
-**DELETE**
+### DELETE
 
-```text
-/api/courses/{id}
-```
+    /api/courses/{id}
 
 Example:
 
-```bash
-curl -X DELETE http://localhost:8080/api/courses/1
-```
+    curl -X DELETE http://localhost:8080/api/courses/1
 
-If the course does not exist, the API returns:
+If the course does not exist:
 
-```text
-404 NOT_FOUND
-```
+    404 NOT_FOUND
 
-## Course Data Structure
+---
+
+# 📚 Course Model
 
 Each course contains the following fields:
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | Integer | Automatically generated | Unique course identifier |
-| `name` | String | Yes | Course name |
-| `description` | String | Yes | Course description |
-| `target_date` | String | Yes | Target date in `YYYY-MM-DD` format |
-| `status` | String | Yes | Course status |
-| `created_at` | String | Automatically generated | Creation timestamp |
+| id | Integer | Automatically generated | Unique course identifier |
+| name | String | Yes | Course name |
+| description | String | Yes | Course description |
+| target_date | String | Yes | Target date |
+| status | String | Yes | Current course status |
+| created_at | String | Automatically generated | Creation timestamp |
 
-### Valid Status Values
+---
 
-Only these status values are accepted:
+# 🔄 Course Status
 
-```text
-Not Started
-In Progress
-Completed
-```
+The following status values are supported:
 
-## Validation and Error Handling
+    Not Started
+    In Progress
+    Completed
 
-The API provides error handling for:
+An invalid status results in:
+
+    400 BAD_REQUEST
+
+---
+
+# ⚠️ Validation & Error Handling
+
+The application handles several error scenarios, including:
 
 - Missing required fields
-- Invalid status values
+- Invalid course status
 - Course not found
+- Invalid request data
 - File read/write errors
-- Invalid requests
 - Internal server errors
 
-### Missing Required Field
+---
 
-For example:
+## Missing Required Field
 
-```json
-{
-  "name": "",
-  "description": "Learn Java",
-  "target_date": "2026-12-31",
-  "status": "Not Started"
-}
-```
+Example:
 
-The API returns:
-
-```text
-400 BAD_REQUEST
-```
-
-### Invalid Status
-
-For example:
-
-```json
-{
-  "status": "Finished"
-}
-```
-
-`Finished` is not a valid status.
+    {
+      "name": "",
+      "description": "Learn Java",
+      "target_date": "2026-12-31",
+      "status": "Not Started"
+    }
 
 The API returns:
 
-```text
-400 BAD_REQUEST
-```
+    400 BAD_REQUEST
 
-### Course Not Found
+---
 
-Requesting a course that does not exist:
+## Invalid Status
 
-```text
-GET /api/courses/999
-```
+Example:
 
-returns:
+    {
+      "name": "Java Basics",
+      "description": "Learn Java fundamentals",
+      "target_date": "2026-12-31",
+      "status": "Finished"
+    }
 
-```text
-404 NOT_FOUND
-```
+Finished is not a valid course status.
 
-## Testing
+The API returns:
+
+    400 BAD_REQUEST
+
+---
+
+## Course Not Found
+
+Request:
+
+    GET /api/courses/999
+
+Example response:
+
+    {
+      "success": false,
+      "error": "Course with ID 999 not found"
+    }
+
+HTTP status:
+
+    404 NOT_FOUND
+
+---
+
+# 💾 Data Storage
+
+Course information is stored in:
+
+    courses.json
+
+The application uses JSON-based persistence and does not require an external database.
+
+The application can automatically create the data file when it does not exist.
+
+This makes the project lightweight and easy to run locally.
+
+---
+
+# 🧪 Testing
 
 The API can be tested using:
 
@@ -314,134 +361,115 @@ The API can be tested using:
 - curl
 - Browser for GET requests
 
-The following operations should be tested:
+The following scenarios should be tested:
 
 1. Create a course
-2. Get all courses
-3. Get a specific course
+2. Retrieve all courses
+3. Retrieve a course by ID
 4. Update a course
 5. Delete a course
-6. Test missing required fields
-7. Test an invalid status
-8. Test a non-existing course ID
+6. Submit missing required fields
+7. Submit an invalid status
+8. Request a non-existing course ID
 
 The CRUD operations and validation scenarios have been tested during development.
 
-## Troubleshooting
+---
 
-### Problem: `JAVA_HOME not set`
+# 🔧 Troubleshooting
 
-Make sure the `JAVA_HOME` environment variable points to your JDK installation.
-
-Example:
-
-```text
-C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot
-```
-
-### Problem: Port 8080 is already in use
-
-Stop the application currently using port 8080, or configure another port in:
-
-```text
-src/main/resources/application.properties
-```
-
-For example:
-
-```properties
-server.port=8081
-```
-
-### Problem: Maven command is not recognized
+## Maven Command Is Not Recognized
 
 If Maven is not installed globally, use the Maven Wrapper included with the project:
 
-```powershell
-.\mvnw.cmd clean package
-```
+    .\mvnw.cmd clean package
 
 or:
 
-```powershell
-.\mvnw.cmd spring-boot:run
-```
+    .\mvnw.cmd spring-boot:run
 
-## Project Structure
+---
 
-```text
-codecraft-hub/
-├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/
-│       │       └── codecrafthub/
-│       │           ├── CodecraftHubApplication.java
-│       │           ├── CourseController.java
-│       │           ├── Course.java
-│       │           └── CourseService.java
-│       └── resources/
-├── courses.json
-├── pom.xml
-├── mvnw
-├── mvnw.cmd
-└── README.md
-```
+## JAVA_HOME Is Not Configured
 
-## Example Course
+Make sure the JAVA_HOME environment variable points to your JDK installation.
 
-```json
-{
-  "id": 1,
-  "name": "Advanced Java",
-  "description": "Learn advanced Java programming",
-  "status": "Completed",
-  "target_date": "2027-01-15",
-  "created_at": "2026-10-14 08:39:06"
-}
-```
+Example:
 
-## API Response Examples
+    C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot
 
-### Successful Response
+You can verify Java with:
 
-```json
-{
-  "success": true,
-  "course": {
-    "id": 1,
-    "name": "Advanced Java",
-    "description": "Learn advanced Java programming",
-    "status": "Completed",
-    "target_date": "2027-01-15",
-    "created_at": "2026-10-14 08:39:06"
-  }
-}
-```
+    java -version
 
-### Error Response
+---
 
-```json
-{
-  "success": false,
-  "error": "Course with ID 999 not found"
-}
-```
+## Port 8080 Is Already in Use
 
-## Build Verification
+Stop the application currently using port 8080, or configure another port in:
+
+    src/main/resources/application.properties
+
+For example:
+
+    server.port=8081
+
+---
+
+# ✅ Build Verification
 
 The project can be verified with:
 
-```powershell
-.\mvnw.cmd clean package
-```
+    .\mvnw.cmd clean package
 
-A successful build should end with:
+Expected result:
 
-```text
-BUILD SUCCESS
-```
+    BUILD SUCCESS
 
-## License
+The project has been successfully built using:
+
+- Java 21
+- Spring Boot
+- Maven
+- Maven Wrapper
+
+---
+
+# 📌 Project Status
+
+Status: Completed
+
+The project implements the core functionality required for the CodeCraftHub Course Management API, including:
+
+- CRUD operations
+- Input validation
+- Status validation
+- Exception handling
+- JSON-based persistence
+- RESTful API design
+- Maven-based build and execution
+
+---
+
+# 🎓 Learning Objectives
+
+This project demonstrates practical experience with:
+
+- Java programming
+- Spring Boot application development
+- REST API design
+- HTTP methods and status codes
+- CRUD operations
+- JSON serialization and deserialization
+- Input validation
+- Exception handling
+- Service and controller separation
+- Maven project management
+- Git and GitHub
+- API testing
+
+---
+
+# 📄 License
 
 This project was created as part of the CodeCraftHub learning project.
